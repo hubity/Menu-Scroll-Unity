@@ -32,23 +32,32 @@ public class SnapScrolling : MonoBehaviour
 
     public int j;
 
+    public Image image;
+    public Sprite[] sprite;
+
+    public string[] nomeGame;
+
     private void Start()
     {
-
+        
         contentRect = GetComponent<RectTransform>();
         instPans = new GameObject[panCount];
         pansPos = new Vector2[panCount];
         pansScale = new Vector2[panCount];
         for (int i = 0; i < panCount; i++)
         {
+            image.sprite = sprite[i];
             instPans[i] = Instantiate(panPrefab, transform, false);
             if (i == 0) continue;
             instPans[i].transform.localPosition = new Vector2(instPans[i - 1].transform.localPosition.x + panPrefab.GetComponent<RectTransform>().sizeDelta.x + panOffset,
                 instPans[i].transform.localPosition.y);
             pansPos[i] = -instPans[i].transform.localPosition;
         }
+      
     }
+
     public int local;
+    
     private void FixedUpdate()
     {
 
@@ -61,16 +70,20 @@ public class SnapScrolling : MonoBehaviour
             local = local - 1;
         }
 
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Debug.Log(nomeGame[local]);
+            Show();
+        }
+
         if (contentRect.anchoredPosition.x >= pansPos[0].x && !isScrolling || contentRect.anchoredPosition.x <= pansPos[pansPos.Length - 1].x && !isScrolling)
             scrollRect.inertia = false;
         float nearestPos = float.MaxValue;
         for (int i = 0; i < panCount; i++)
         {
-            
             float distance = Mathf.Abs(contentRect.anchoredPosition.x - pansPos[i].x);
             if (distance < nearestPos)
             {
-
                 nearestPos = distance;
                 selectedPanID = local;
             }
@@ -93,14 +106,9 @@ public class SnapScrolling : MonoBehaviour
         if (scroll) scrollRect.inertia = true;
     }
 
-    public void Teste()
+    public void Show()
     {
-        //float nearestPos = float.MaxValue;
-        for (int i = 0;i < panCount; i++)
-        {
-            
-            
-        }
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com." + nomeGame[local]);
     }
 
 }

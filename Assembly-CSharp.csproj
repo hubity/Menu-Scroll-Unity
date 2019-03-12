@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\SnapScrolling.cs" />
+    <Compile Include="Assets\Script\testes.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/gitclone/Menu-Scroll-Unity/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
